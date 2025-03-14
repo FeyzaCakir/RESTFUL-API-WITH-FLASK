@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAVORİLER</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1c1c1c;
+            color: white;
+        }
+        header {
+            background-color: rgb(5,15,56);
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        h1{
+            text-align: center;
+        }
+        .container button {
+            background-color:rgb(5,15,56);
+            text-align=left;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        } 
+        .film-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: stretch;
+        }
+        
+        .film {
+            width: 220px;
+            min-height: 400px;
+            max-height: 450px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #333;
+            border-radius: 8px;
+        }
+        img {
+            width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>Favoriler</header>
+    <h1>Favori Filmler</h1>
+    <div class="container">
+        <form action="{{ url_for('anasayfa') }}" method="POST">
+            <button type="submit">GERİ</button>
+        </form>
+    </div>
+    <div class="film-container">
+        {% for film in favori_films %}
+            <div class="film">
+                {% if film.poster_path %}
+                    <img src="https://image.tmdb.org/t/p/w200{{ film.poster_path }}" alt="{{ film.title }}">
+                {% else %}
+                    <p>Poster yolu eksik: {{ film.title }}</p>
+                {% endif %}
+                <h3>{{ film.title }}</h3>
+                <p>{{ film.release_date }}</p>
+                <form action="{{ url_for('sil') }}" method="POST">
+                    <input type="hidden" name="title" value="{{ film.title }}">
+                    <button type="submit">&#45;</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

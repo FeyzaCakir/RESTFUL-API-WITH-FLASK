@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ film.title }} - Detaylar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1c1c1c;
+            color: white;
+        }
+        header {
+            background-color:rgb(5, 25, 107);
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .film-detail {
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 8px;
+            text-align: center;
+        }
+        img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        h1, p {
+            margin: 10px 0;
+        }
+        .container button {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background-color: rgb(5,15,56);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>Film Detayları</header>
+    <div class="container">
+        <form action="{{ url_for('anasayfa') }}" method="POST">
+            <button type="submit">GERİ</button>
+        </form>
+    </div>
+    <div class="container">
+        <div class="film-detail">
+            <img src="https://image.tmdb.org/t/p/w400{{ film.poster_path }}" alt="{{ film.title }}">
+            <h1>{{ film.title }}</h1>
+            <p><strong>Çıkış Tarihi:</strong> {{ film.release_date }}</p>
+            <p><strong>Özet:</strong> {{ film.overview }}</p>
+        </div>
+    </div>
+</body>
+</html>

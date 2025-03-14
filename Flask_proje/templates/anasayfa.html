@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANASAYFA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1c1c1c;
+            color: white;
+        }
+        header {
+            background-color:rgb(5, 15, 56);
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            justify-content: left; 
+            gap: 15px; 
+            margin-top: 20px; 
+        }
+        .container button {
+            background-color:rgb(5,15,56);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        } 
+        .film-container { 
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px; /* Kartlar arasında boşluk bırak */
+            justify-content: center;
+            align-items: stretch; /* Tüm kartları eşit yükseklikte yap */
+        }
+        .film {
+            width: 220px; /* Kartların sabit genişliği */
+            min-height: 400px; /* Kartların minimum yüksekliği */
+            max-height: 450px; /* Kartların maksimum yüksekliği */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* İçeriği yukarı ve aşağı yay */
+            align-items: center;
+            margin: 15px; 
+            padding: 15px; 
+            border: 1px solid #ccc; 
+            background-color: #333;
+            border-radius: 8px;
+        }
+        
+        img { width: 100%; border-radius: 5px; }
+
+        h1{
+            text-align: center;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>Filmler</header>
+    <div class="container">
+        <form action="{{ url_for('favoriler') }}" method="POST">
+            <button type="submit">FAVORİLER</button>
+        </form>
+    </div>
+    <h1>Popüler Filmler</h1>
+    <div class="film-container">
+        {% for movie in movies %}
+            <div class="film">
+                <a href="{{ url_for('film_detay', film_id=movie.id) }}">
+                    <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}">
+                    <h3>{{ movie.title }}</h3>
+                    <p>{{ movie.release_date }}</p>
+                </a>
+                <form action="{{ url_for('ekle') }}" method="POST">
+                    <input type="hidden" name="title" value="{{ movie.title }}">
+                    <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
+                    <input type="hidden" name="release_date" value="{{ movie.release_date }}">
+                    <button type="submit">&#43;</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
